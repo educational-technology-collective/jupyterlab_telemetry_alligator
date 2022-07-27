@@ -17,8 +17,8 @@ class JupyterLabTelemetryAlligatorApp(ExtensionApp):
 
         try:
 
-            pathlib.Path(self.telemetry_path).mkdir(parents=True, exist_ok=True)
-            
+            pathlib.Path(self.telemetry_path, os.getenv('ETC_SESSION_UUID')).mkdir(parents=True, exist_ok=True)
+
             # def pre_save_hook(model, **kwargs):
             #     pprint.pprint(model)
 
