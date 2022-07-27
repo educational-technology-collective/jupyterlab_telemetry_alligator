@@ -10,7 +10,7 @@ class JupyterLabTelemetryAlligatorApp(ExtensionApp):
 
     name = "jupyterlab_telemetry_alligator"
 
-    efs_path = Unicode("").tag(config=True)
+    telemetry_path = Unicode("").tag(config=True)
     telemetry = Bool(None, allow_none=True).tag(config=True)
 
     # def initialize_settings(self):

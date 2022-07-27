@@ -58,13 +58,10 @@ class RouteHandler(ExtensionHandlerMixin, JupyterHandler):
                 file_name = f'{str(uuid.uuid4())}_{int(time.time() * 1000)}.json'
                 
                 with open(pathlib.Path().joinpath(
-                    self.extensionapp.efs_path, 
+                    self.extensionapp.telemetry_path, 
                     os.getenv('ETC_SESSION_UUID'),
                     file_name), 'wb') as f:
                     f.write(data)
-
-                # return data.decode("utf-8")
-                # result = self.process_request() #IOLoop.current().run_in_executor(None, self.process_request)
 
                 self.finish(json.dumps(data.decode("utf-8")))
 
@@ -75,8 +72,6 @@ class RouteHandler(ExtensionHandlerMixin, JupyterHandler):
             self.log.error(str(e))
             self.set_status(500)
             self.finish(json.dumps(str(e)))
-
-    # def process_request(self):
 
 
         

@@ -19,7 +19,7 @@ const PLUGIN_ID = '@educational-technology-collective/jupyterlab_telemetry_allig
 
 export class MessageAdapater {
 
-  private _userId: Promise<string>;
+  private _userId: string;
   private _etcJupyterLabNotebookStateProvider: IETCJupyterLabNotebookStateProvider;
 
   constructor(
@@ -29,17 +29,10 @@ export class MessageAdapater {
 
     this._etcJupyterLabNotebookStateProvider = etcJupyterLabNotebookStateProvider;
 
-    this._userId = (async () => {
+    let hubUser = document?.cookie?.split('; ')?.find(row => row.startsWith('hub_user='))?.split('=')[1];
 
-      try { // to get the user id.
-        return await requestAPI<any>('jupyterhub_user');
-      } catch (e) {
-        console.error(`Error on GET id.\n${e}`);
-        return 'UNDEFINED';
-      }
-      //  This request is specific to the Coursera environment; hence, it may not be relevant in other contexts.
-      //  The request for the `id` resource will return the value of the WORKSPACE_ID environment variable that is assigned on the server.
-    })();
+    this._userId = hubUser ? hubUser : "UNDEFINED";
+
   }
 
   async adaptMessage(sender: any, data: INotebookEventMessage) {
@@ -57,7 +50,7 @@ export class MessageAdapater {
         'cells': data.cells,
         ...notebookState,
         ...{
-          user_id: await this._userId,
+          user_id: this._userId,
           notebook_path: notebookPath
         }
       }
