@@ -13,22 +13,25 @@ class JupyterLabTelemetryAlligatorApp(ExtensionApp):
     telemetry_path = Unicode("").tag(config=True)
     telemetry = Bool(None, allow_none=True).tag(config=True)
 
-    # def initialize_settings(self):
+    def initialize_settings(self):
 
-    #     try:
-    #         def pre_save_hook(model, **kwargs):
-    #             pprint.pprint(model)
+        try:
 
-    #         self.settings['contents_manager'].register_pre_save_hook(pre_save_hook)
+            pathlib.Path(self.telemetry_path).mkdir(parents=True, exist_ok=True)
+            
+            # def pre_save_hook(model, **kwargs):
+            #     pprint.pprint(model)
 
-    #         def post_save_hook(model, os_path, contents_manager, **kwargs):
-    #             pprint.pprint(os_path)
-    #             pprint.pprint(model)
+            # self.settings['contents_manager'].register_pre_save_hook(pre_save_hook)
 
-    #         self.settings['contents_manager'].register_post_save_hook(post_save_hook)
+            # def post_save_hook(model, os_path, contents_manager, **kwargs):
+            #     pprint.pprint(os_path)
+            #     pprint.pprint(model)
 
-    #     except Exception as e:
-    #         self.log.error(str(e))
+            # self.settings['contents_manager'].register_post_save_hook(post_save_hook)
+
+        except Exception as e:
+            self.log.error(str(e))
 
     def initialize_handlers(self):
         self.handlers.extend([("/jupyterlab-telemetry-alligator/(.*)", RouteHandler)])
