@@ -1,0 +1,8 @@
+{
+  "jupyter.lab.shortcuts": [],
+  "title": "@educational-technology-collective/jupyterlab_telemetry_alligator",
+  "description": "@educational-technology-collective/jupyterlab_telemetry_alligator settings.",
+  "type": "object",
+  "properties": {},
+  "additionalProperties": false
+}

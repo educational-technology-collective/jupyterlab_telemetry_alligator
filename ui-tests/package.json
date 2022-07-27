@@ -1,0 +1,13 @@
+{
+  "name": "@educational-technology-collective/jupyterlab_telemetry_alligator-ui-tests",
+  "version": "1.0.0",
+  "description": "JupyterLab @educational-technology-collective/jupyterlab_telemetry_alligator Integration Tests",
+  "private": true,
+  "scripts": {
+    "start": "jupyter lab --config jupyter_server_test_config.py",
+    "test": "jlpm playwright test"
+  },
+  "devDependencies": {
+    "@jupyterlab/galata": "^4.3.0"
+  }
+}
