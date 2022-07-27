@@ -57,7 +57,10 @@ class RouteHandler(ExtensionHandlerMixin, JupyterHandler):
 
                 file_name = f'{str(uuid.uuid4())}_{int(time.time() * 1000)}.json'
                 
-                with open(pathlib.Path().joinpath(self.extensionapp.efs_path, file_name), 'wb') as f:
+                with open(pathlib.Path().joinpath(
+                    self.extensionapp.efs_path, 
+                    os.getenv('ETC_SESSION_UUID'),
+                    file_name), 'wb') as f:
                     f.write(data)
 
                 # return data.decode("utf-8")
