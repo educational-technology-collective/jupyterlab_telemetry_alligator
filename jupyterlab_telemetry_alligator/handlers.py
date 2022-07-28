@@ -58,7 +58,7 @@ class RouteHandler(ExtensionHandlerMixin, JupyterHandler):
                 file_name = f'{str(uuid.uuid4())}_{int(time.time() * 1000)}.json'
 
                 path = pathlib.Path().joinpath(
-                    self.extensionapp.telemetry_path, os.getenv('ETC_SESSION_UUID'), "telemetry", file_name
+                    self.extensionapp.efs_path, os.getenv('ETC_SESSION_UUID'), "telemetry", file_name
                     )
                 
                 with open(path, 'wb') as f:
