@@ -10,14 +10,16 @@ class JupyterLabTelemetryAlligatorApp(ExtensionApp):
 
     name = "jupyterlab_telemetry_alligator"
 
-    telemetry_path = Unicode("").tag(config=True)
+    efs_path = Unicode("").tag(config=True)
     telemetry = Bool(None, allow_none=True).tag(config=True)
 
     def initialize_settings(self):
 
         try:
 
-            pathlib.Path(self.telemetry_path, os.getenv('ETC_SESSION_UUID')).mkdir(parents=True, exist_ok=True)
+            pass
+
+            # pathlib.Path(self.telemetry_path, os.getenv('ETC_SESSION_UUID')).mkdir(parents=True, exist_ok=True)
 
             # def pre_save_hook(model, **kwargs):
             #     pprint.pprint(model)
