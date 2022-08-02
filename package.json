@@ -29,6 +29,7 @@
     "url": "https://github.com/educational-technology-collective/jupyterlab_telemetry_alligator.git"
   },
   "scripts": {
+    "build:deploy": "jlpm run build && rm -rf dist && python -m build . && git status && git add . && git commit -m 'build:deploy' && git push",
     "build": "jlpm build:lib && jlpm build:labextension:dev",
     "build:prod": "jlpm clean && jlpm build:lib && jlpm build:labextension",
     "build:labextension": "jupyter labextension build .",
@@ -58,10 +59,9 @@
     "@educational-technology-collective/etc_jupyterlab_notebook_state_provider": "^2.0.0",
     "@educational-technology-collective/etc_jupyterlab_telemetry_library": "^2.0.0",
     "@jupyterlab/application": "^3.1.0",
-    "@jupyterlab/settingregistry": "^3.1.0",
     "@jupyterlab/coreutils": "^5.1.0",
-    "@jupyterlab/services": "^6.1.0"
-
+    "@jupyterlab/services": "^6.1.0",
+    "@jupyterlab/settingregistry": "^3.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
@@ -84,8 +84,8 @@
     "stylelint-config-recommended": "^6.0.0",
     "stylelint-config-standard": "~24.0.0",
     "stylelint-prettier": "^2.0.0",
-    "typescript": "~4.1.3",
-    "ts-jest": "^26.0.0"
+    "ts-jest": "^26.0.0",
+    "typescript": "~4.1.3"
   },
   "sideEffects": [
     "style/*.css",
@@ -95,7 +95,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "jupyterlab": { 
+  "jupyterlab": {
     "sharedPackages": {
       "@educational-technology-collective/etc_jupyterlab_telemetry_library": {
         "bundled": false,
@@ -109,14 +109,14 @@
       }
     },
     "discovery": {
-        "server": {
-          "managers": [
-            "pip"
-          ],
-          "base": {
-            "name": "jupyterlab_telemetry_alligator"
-          }
+      "server": {
+        "managers": [
+          "pip"
+        ],
+        "base": {
+          "name": "jupyterlab_telemetry_alligator"
         }
+      }
     },
     "extension": true,
     "outputDir": "jupyterlab_telemetry_alligator/labextension",

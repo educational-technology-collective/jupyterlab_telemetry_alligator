@@ -43,21 +43,18 @@ export class MessageAdapater {
         notebookPanel: data.notebookPanel
       });
 
-      let notebookPath = data.notebookPanel.context.path;
-
-      let message: any = {
-        'event_name': data.eventName,
-        'cells': data.cells,
-        ...notebookState,
-        ...{
-          user_id: this._userId,
-          notebook_path: notebookPath
-        }
-      }
-
-      if (data.meta) {
-
-        message['meta'] = data.meta;
+      var message: any = {
+        'event_name': data.eventName,  //  The name of the event.
+        'cells': data.cells,  //  The relevant cells.
+        'notebook': notebookState?.notebook,  //  The diffed Notebook.
+        'seq': notebookState?.seq,  //  The event sequence.
+        'session_id': notebookState?.session_id,  //  The session ID.
+        'user_id': await this._userId,  //  The user ID.
+        'notebook_path': data.notebookPanel.context.path,  //  The path of the Notebook.
+        'kernel_error': data.kernelError, //  The complete kernel error for cell_errored event.
+        'selection': data.selection, //  The selection for copy/cut/paste events.
+        'environ': data.environ,  //  All environment variables for open_notebook events.
+        'meta': data.notebookPanel.content.model?.toJSON()  //  The complete Notebook.  // data.eventName == 'save_notebook' ? data.notebookPanel.content.model?.toJSON() : undefined
       }
 
       console.log('Request', message);
@@ -65,9 +62,12 @@ export class MessageAdapater {
       let response = await requestAPI<any>('telemetry', { method: 'POST', body: JSON.stringify(message) });
 
       message = { ...message };
-
+      //  Deleting from the message object will remove the properties from the Request console message; 
+      //  hence spread the message into a new object for displaying the Response.
       delete message.notebook;
       delete message.cells;
+      delete message?.meta
+      //  The Reponse just needs to display the parts of the message that can be used for matching it up to the Request.
 
       console.log('Response', {
         'response': response,
